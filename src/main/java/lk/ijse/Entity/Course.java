@@ -1,4 +1,59 @@
 package lk.ijse.Entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+//import org.hibernate.mapping.List;
+
+@Getter
+@Setter
+//@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+//@Builder
+@Builder
+@Entity
+@Table(name = "course")
 public class Course {
+    @Id
+    @Column(name = "course_id")
+    private String courseId;
+
+    @Column(nullable = false)
+    private String courseName;
+
+    @Column(nullable = false)
+    private String duration;
+
+    @Column(nullable = false)
+    private double fee;
+
+    @Column(nullable = false)
+    private String description;
+
+
+    @ManyToOne
+    @JoinColumn(name = "instructorId" , referencedColumnName = "instructorId")
+    private Instructor instructor;
+//    private String instructorId;
+
+//    @OneToMany(
+//            mappedBy = "course",
+//            cascade = CascadeType.ALL
+//    )
+//    private List<StudentCourseDetail> studentsCourseDetail;
+
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students;
+
+    @OneToMany(
+            mappedBy = "course",
+            cascade = CascadeType.ALL
+    )
+
+    private List<Lessons> lessons;
+
+//    public Object getInstructorId() {
+//    }
 }

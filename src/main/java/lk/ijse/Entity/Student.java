@@ -1,26 +1,74 @@
 package lk.ijse.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lk.ijse.Entity.Course;
+import lk.ijse.Entity.Lessons;
+import lk.ijse.Entity.Payment;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "student")
+
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int studentId;
-    private String name;
+    @Column
+    private String studentId;
 
-    private int age;
-    private int contactNo;
+    @Column
+    private String firstName;
+
+    @Column
+    private String lastName;
+
+    @Column(nullable = false , unique = true)
     private String email;
+
+    @Column(length = 15 , nullable = false , unique = true)
+    private String phone;
+
+    @Column(nullable = false)
     private String address;
+
+    @Column(nullable = false)
+    private LocalDate dob;
+
+    @Column(nullable = false)
+    private LocalDate registrationDate;
+
+//    @OneToMany(
+//            mappedBy = "student",
+//            cascade = CascadeType.ALL
+//    )
+//    private List<StudentCourseDetail> studentCourseDetails;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_course_detail",
+            joinColumns = @JoinColumn(name = "studentId"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+
+    private List<Course> courses;
+
+    @OneToMany(
+            mappedBy = "student",
+            cascade = CascadeType.ALL
+    )
+    private List<Lessons> lessons;
+
+    @OneToMany(
+            mappedBy = "student",
+            cascade = CascadeType.ALL
+    )
+    private List<Payment> payments;
+
 }

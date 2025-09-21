@@ -6,8 +6,8 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.CourseManagePageController"
-            prefWidth="900.0" prefHeight="600.0"
+            fx:controller="lk.ijse.controller.CourseManagePageController"
+            prefWidth="950.0" prefHeight="600.0"
             style="-fx-background-color: #f4f6f9;">
 
     <!-- Top Bar -->
@@ -32,17 +32,24 @@
                 <TextField fx:id="txtCourseId" promptText="C001" GridPane.columnIndex="1"/>
 
                 <Label text="Name:" GridPane.rowIndex="1"/>
-                <TextField fx:id="txtCourseName" promptText="Enter Course Name" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtCourseName" promptText="Enter Course Name"
+                           GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
                 <Label text="Duration:" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtDuration" promptText="e.g. 6 Months" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtDuration" promptText="e.g. 6 Months"
+                           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
                 <Label text="Fee:" GridPane.rowIndex="3"/>
-                <TextField fx:id="txtFee" promptText="Enter Course Fee" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <TextField fx:id="txtFee" promptText="Enter Course Fee"
+                           GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
                 <Label text="Description:" GridPane.rowIndex="4"/>
                 <TextArea fx:id="txtDescription" promptText="Enter Description" prefRowCount="3"
                           GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                <Label text="Instructor:" GridPane.rowIndex="5"/>
+                <ComboBox fx:id="cmbInstructorId" promptText="Select Instructor"
+                          GridPane.columnIndex="1" GridPane.rowIndex="5"/>
             </GridPane>
 
             <!-- Buttons -->
@@ -58,13 +65,14 @@
             </HBox>
 
             <!-- TableView -->
-            <TableView fx:id="tblCourses" prefHeight="300" prefWidth="850">
+            <TableView fx:id="tblCourses" prefHeight="300" prefWidth="900">
                 <columns>
                     <TableColumn fx:id="colCourseId" text="Course ID" prefWidth="100"/>
-                    <TableColumn fx:id="colCourseName" text="Name" prefWidth="200"/>
-                    <TableColumn fx:id="colDuration" text="Duration" prefWidth="150"/>
-                    <TableColumn fx:id="colFee" text="Fee" prefWidth="120"/>
-                    <TableColumn fx:id="colDescription" text="Description" prefWidth="280"/>
+                    <TableColumn fx:id="colCourseName" text="Name" prefWidth="150"/>
+                    <TableColumn fx:id="colDuration" text="Duration" prefWidth="120"/>
+                    <TableColumn fx:id="colFee" text="Fee" prefWidth="100"/>
+                    <TableColumn fx:id="colDescription" text="Description" prefWidth="250"/>
+                    <TableColumn fx:id="colInstructorId" text="Instructor" prefWidth="150"/>
                 </columns>
             </TableView>
         </VBox>

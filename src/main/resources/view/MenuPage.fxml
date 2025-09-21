@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.MenuPageController"
+            fx:controller="lk.ijse.controller.MenuPageController"
             prefWidth="800.0" prefHeight="500.0"
             style="-fx-background-color: #f4f6f9;">
 

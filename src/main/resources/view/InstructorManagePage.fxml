@@ -6,8 +6,8 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.InstructorManagePageController"
-            prefWidth="950.0" prefHeight="600.0"
+            fx:controller="lk.ijse.controller.InstructorManagePageController"
+            prefWidth="1000.0" prefHeight="650.0"
             style="-fx-background-color: #f4f6f9;">
 
     <!-- Top Bar -->
@@ -31,19 +31,23 @@
                 <Label text="Instructor ID:"/>
                 <TextField fx:id="txtInstructorId" promptText="I001" GridPane.columnIndex="1"/>
 
-                <Label text="Name:" GridPane.rowIndex="1"/>
-                <TextField fx:id="txtName" promptText="Enter Full Name" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="First Name:" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtFirstName" promptText="Enter First Name" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                <Label text="Phone:" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtPhone" promptText="+94XXXXXXXXX" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="Last Name:" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtLastName" promptText="Enter Last Name" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                <Label text="Specialization:" GridPane.rowIndex="3"/>
-                <TextField fx:id="txtSpecialization" promptText="e.g. Defensive Driving" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Label text="Email:" GridPane.rowIndex="3"/>
+                <TextField fx:id="txtEmail" promptText="example@mail.com" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-                <Label text="Assign Courses:" GridPane.rowIndex="4"/>
-                <ListView fx:id="listCourses" GridPane.columnIndex="1" GridPane.rowIndex="4"
-                          prefHeight="80" prefWidth="200"
-                          style="-fx-border-color: gray;"/>
+                <Label text="Phone:" GridPane.rowIndex="4"/>
+                <TextField fx:id="txtPhone" promptText="+94XXXXXXXXX" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                <Label text="Specialization:" GridPane.rowIndex="5"/>
+                <TextField fx:id="txtSpecialization" promptText="e.g. Defensive Driving" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                <Label text="Availability:" GridPane.rowIndex="6"/>
+                <TextField fx:id="txtAvailability" promptText="e.g. Mon-Fri, 9AM-5PM" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
             </GridPane>
 
             <!-- Buttons -->
@@ -59,13 +63,15 @@
             </HBox>
 
             <!-- TableView -->
-            <TableView fx:id="tblInstructors" prefHeight="300" prefWidth="900">
+            <TableView fx:id="tblInstructors" prefHeight="300" prefWidth="950">
                 <columns>
-                    <TableColumn fx:id="colInstructorId" text="Instructor ID" prefWidth="120"/>
-                    <TableColumn fx:id="colName" text="Name" prefWidth="200"/>
-                    <TableColumn fx:id="colPhone" text="Phone" prefWidth="150"/>
-                    <TableColumn fx:id="colSpecialization" text="Specialization" prefWidth="200"/>
-                    <TableColumn fx:id="colCourses" text="Assigned Courses" prefWidth="230"/>
+                    <TableColumn fx:id="colInstructorId" text="Instructor ID" prefWidth="100"/>
+                    <TableColumn fx:id="colFirstName" text="First Name" prefWidth="150"/>
+                    <TableColumn fx:id="colLastName" text="Last Name" prefWidth="150"/>
+                    <TableColumn fx:id="colEmail" text="Email" prefWidth="200"/>
+                    <TableColumn fx:id="colPhone" text="Phone" prefWidth="120"/>
+                    <TableColumn fx:id="colSpecialization" text="Specialization" prefWidth="150"/>
+                    <TableColumn fx:id="colAvailability" text="Availability" prefWidth="150"/>
                 </columns>
             </TableView>
         </VBox>

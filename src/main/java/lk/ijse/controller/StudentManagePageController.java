@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import lk.ijse.BO.BOFactory;
 import lk.ijse.BO.custom.StudentBO;
 
-public class studentController {
+public class StudentManagePageController {
 
     @FXML
     private Button btnClear;

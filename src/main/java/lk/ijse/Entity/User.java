@@ -1,27 +1,36 @@
-
 package lk.ijse.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
-import java.util.Date;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Entity
 @Getter
 @Setter
+//@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+//@Builder
+@Entity
+@Table(name = "user")
 public class User {
     @Id
-    private String user_id;
-    private String username;
-    private String Address;
-    private String user_phone;
-    private String user_email;
-    private String Position;
+    @Column
+    private String userId;
+
+    @Column(nullable = false , unique = true)
+    private String userName;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String role;
+
+    @Column(nullable = false , unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String status;
 }

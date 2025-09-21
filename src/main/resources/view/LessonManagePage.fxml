@@ -6,8 +6,8 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.LessonManagePageController"
-            prefWidth="950.0" prefHeight="600.0"
+            fx:controller="lk.ijse.controller.LessonManagePageController"
+            prefWidth="1000.0" prefHeight="650.0"
             style="-fx-background-color: #f4f6f9;">
 
     <!-- Top Bar -->
@@ -31,20 +31,27 @@
                 <Label text="Lesson ID:"/>
                 <TextField fx:id="txtLessonId" promptText="L001" GridPane.columnIndex="1" editable="false"/>
 
-                <Label text="Course ID:" GridPane.rowIndex="1"/>
-                <ComboBox fx:id="cmbCourseId" promptText="Select Course" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="Student ID:" GridPane.rowIndex="1"/>
+                <ComboBox fx:id="cmbStudentId" promptText="Select Student" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                <Label text="Instructor ID:" GridPane.rowIndex="2"/>
-                <ComboBox fx:id="cmbInstructorId" promptText="Select Instructor" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="Course ID:" GridPane.rowIndex="2"/>
+                <ComboBox fx:id="cmbCourseId" promptText="Select Course" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                <Label text="Date:" GridPane.rowIndex="3"/>
-                <DatePicker fx:id="dpLessonDate" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Label text="Instructor ID:" GridPane.rowIndex="3"/>
+                <ComboBox fx:id="cmbInstructorId" promptText="Select Instructor" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-                <Label text="Start Time:" GridPane.rowIndex="4"/>
-                <TextField fx:id="txtStartTime" promptText="HH:mm" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Label text="Date:" GridPane.rowIndex="4"/>
+                <DatePicker fx:id="dpLessonDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-                <Label text="End Time:" GridPane.rowIndex="5"/>
-                <TextField fx:id="txtEndTime" promptText="HH:mm" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                <Label text="Start Time:" GridPane.rowIndex="5"/>
+                <TextField fx:id="txtStartTime" promptText="HH:mm" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                <Label text="End Time:" GridPane.rowIndex="6"/>
+                <TextField fx:id="txtEndTime" promptText="HH:mm" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+                <Label text="Status:" GridPane.rowIndex="7"/>
+                <ComboBox fx:id="cmbStatus" promptText="Not Started / In Progress / Completed"
+                          GridPane.columnIndex="1" GridPane.rowIndex="7"/>
             </GridPane>
 
             <!-- Buttons -->
@@ -60,14 +67,16 @@
             </HBox>
 
             <!-- TableView -->
-            <TableView fx:id="tblLessons" prefHeight="300" prefWidth="900">
+            <TableView fx:id="tblLessons" prefHeight="300" prefWidth="950">
                 <columns>
                     <TableColumn fx:id="colLessonId" text="Lesson ID" prefWidth="100"/>
-                    <TableColumn fx:id="colCourseId" text="Course ID" prefWidth="150"/>
-                    <TableColumn fx:id="colInstructorId" text="Instructor ID" prefWidth="150"/>
-                    <TableColumn fx:id="colDate" text="Date" prefWidth="150"/>
+                    <TableColumn fx:id="colStudentId" text="Student ID" prefWidth="120"/>
+                    <TableColumn fx:id="colCourseId" text="Course ID" prefWidth="120"/>
+                    <TableColumn fx:id="colInstructorId" text="Instructor ID" prefWidth="120"/>
+                    <TableColumn fx:id="colDate" text="Date" prefWidth="120"/>
                     <TableColumn fx:id="colStartTime" text="Start Time" prefWidth="120"/>
                     <TableColumn fx:id="colEndTime" text="End Time" prefWidth="120"/>
+                    <TableColumn fx:id="colStatus" text="Status" prefWidth="120"/>
                 </columns>
             </TableView>
 

@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.StudentManagePageController"
+            fx:controller="lk.ijse.controller.StudentManagePageController"
             prefWidth="1000.0" prefHeight="650.0"
             style="-fx-background-color: #f4f6f9;">
 
@@ -28,25 +28,32 @@
 
             <!-- Form Section -->
             <GridPane hgap="15" vgap="15" alignment="CENTER_LEFT">
+
                 <Label text="Student ID:"/>
                 <TextField fx:id="txtStudentId" promptText="S001" GridPane.columnIndex="1"/>
 
-                <Label text="Name:" GridPane.rowIndex="1"/>
-                <TextField fx:id="txtName" promptText="Enter Full Name" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="First Name:" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtFirstName" promptText="Enter First Name" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                <Label text="Email:" GridPane.rowIndex="2"/>
-                <TextField fx:id="txtEmail" promptText="example@mail.com" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="Last Name:" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtLastName" promptText="Enter Last Name" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                <Label text="Phone:" GridPane.rowIndex="3"/>
-                <TextField fx:id="txtPhone" promptText="+94XXXXXXXXX" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Label text="Email:" GridPane.rowIndex="3"/>
+                <TextField fx:id="txtEmail" promptText="example@mail.com" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-                <Label text="Registration Date:" GridPane.rowIndex="4"/>
-                <DatePicker fx:id="dateReg" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Label text="Phone:" GridPane.rowIndex="4"/>
+                <TextField fx:id="txtPhone" promptText="+94XXXXXXXXX" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-                <Label text="Courses:" GridPane.rowIndex="5"/>
-                <ListView fx:id="listCourses" GridPane.columnIndex="1" GridPane.rowIndex="5"
-                          prefHeight="80" prefWidth="200"
-                          style="-fx-border-color: gray;"/>
+                <Label text="Address:" GridPane.rowIndex="5"/>
+                <TextArea fx:id="txtAddress" promptText="Enter Address" prefRowCount="2"
+                          GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                <Label text="Date of Birth:" GridPane.rowIndex="6"/>
+                <DatePicker fx:id="dpDob" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+                <Label text="Registration Date:" GridPane.rowIndex="7"/>
+                <DatePicker fx:id="dpRegDate" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
             </GridPane>
 
             <!-- Buttons -->
@@ -62,16 +69,19 @@
             </HBox>
 
             <!-- TableView -->
-            <TableView fx:id="tblStudents" prefHeight="300" prefWidth="900">
+            <TableView fx:id="tblStudents" prefHeight="300" prefWidth="950">
                 <columns>
-                    <TableColumn fx:id="colStudentId" text="Student ID" prefWidth="120"/>
-                    <TableColumn fx:id="colName" text="Name" prefWidth="200"/>
-                    <TableColumn fx:id="colEmail" text="Email" prefWidth="200"/>
-                    <TableColumn fx:id="colPhone" text="Phone" prefWidth="150"/>
+                    <TableColumn fx:id="colStudentId" text="Student ID" prefWidth="100"/>
+                    <TableColumn fx:id="colFirstName" text="First Name" prefWidth="150"/>
+                    <TableColumn fx:id="colLastName" text="Last Name" prefWidth="150"/>
+                    <TableColumn fx:id="colEmail" text="Email" prefWidth="150"/>
+                    <TableColumn fx:id="colPhone" text="Phone" prefWidth="120"/>
+                    <TableColumn fx:id="colAddress" text="Address" prefWidth="200"/>
+                    <TableColumn fx:id="colDob" text="DOB" prefWidth="120"/>
                     <TableColumn fx:id="colRegDate" text="Reg. Date" prefWidth="120"/>
-                    <TableColumn fx:id="colCourses" text="Courses" prefWidth="200"/>
                 </columns>
             </TableView>
+
         </VBox>
     </center>
 </BorderPane>
