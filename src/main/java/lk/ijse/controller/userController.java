@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.custom.UserBO;
+import lk.ijse.DTO.UserDTO;
 
 public class userController {
 
@@ -25,6 +28,8 @@ public class userController {
     @FXML
     private TextField txtName;
 
+    UserBO userBO = (UserBO) BOFactory.getBoFactory().getBo(BOFactory.BoType.User);
+
     @FXML
     void btnDeleteAction(ActionEvent event) {
 
@@ -36,7 +41,19 @@ public class userController {
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws Exception {
+        String name = txtName.getText();
+        String address = txtAddress.getText();
+
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setAddress(address);
+        userDTO.setName(name);
+
+
+
+        boolean response  = userBO.save(userDTO);
+        System.out.println(response);
 
     }
 

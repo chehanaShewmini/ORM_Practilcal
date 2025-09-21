@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.InstructorManagePageController"
+            prefWidth="950.0" prefHeight="600.0"
+            style="-fx-background-color: #f4f6f9;">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox spacing="15" alignment="CENTER_LEFT"
+              style="-fx-background-color: #74ebd5; -fx-padding: 15;">
+            <Label text="Instructor Management"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnBack" text="Back to Menu"
+                    style="-fx-background-color: white; -fx-text-fill: #74ebd5;"/>
+        </HBox>
+    </top>
+
+    <!-- Center Content -->
+    <center>
+        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 20;">
+
+            <!-- Form Section -->
+            <GridPane hgap="15" vgap="15" alignment="CENTER_LEFT">
+                <Label text="Instructor ID:"/>
+                <TextField fx:id="txtInstructorId" promptText="I001" GridPane.columnIndex="1"/>
+
+                <Label text="Name:" GridPane.rowIndex="1"/>
+                <TextField fx:id="txtName" promptText="Enter Full Name" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Phone:" GridPane.rowIndex="2"/>
+                <TextField fx:id="txtPhone" promptText="+94XXXXXXXXX" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="Specialization:" GridPane.rowIndex="3"/>
+                <TextField fx:id="txtSpecialization" promptText="e.g. Defensive Driving" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                <Label text="Assign Courses:" GridPane.rowIndex="4"/>
+                <ListView fx:id="listCourses" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                          prefHeight="80" prefWidth="200"
+                          style="-fx-border-color: gray;"/>
+            </GridPane>
+
+            <!-- Buttons -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="btnAdd" text="Add" prefWidth="100"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                <Button fx:id="btnUpdate" text="Update" prefWidth="100"
+                        style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+                <Button fx:id="btnDelete" text="Delete" prefWidth="100"
+                        style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+                <Button fx:id="btnClear" text="Clear" prefWidth="100"
+                        style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
+            </HBox>
+
+            <!-- TableView -->
+            <TableView fx:id="tblInstructors" prefHeight="300" prefWidth="900">
+                <columns>
+                    <TableColumn fx:id="colInstructorId" text="Instructor ID" prefWidth="120"/>
+                    <TableColumn fx:id="colName" text="Name" prefWidth="200"/>
+                    <TableColumn fx:id="colPhone" text="Phone" prefWidth="150"/>
+                    <TableColumn fx:id="colSpecialization" text="Specialization" prefWidth="200"/>
+                    <TableColumn fx:id="colCourses" text="Assigned Courses" prefWidth="230"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

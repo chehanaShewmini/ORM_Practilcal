@@ -1,6 +1,6 @@
 package lk.ijse.BO;
 
-import lk.ijse.BO.Impl.UserBOImpl;
+import lk.ijse.BO.Impl.*;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -20,7 +20,16 @@ public class BOFactory {
 
             case User:
                 return new UserBOImpl();
-
+            case Student:
+                return new StudentBOImpl();
+            case Payment:
+                return  new PaymentBOImpl();
+            case Course:
+                return  new CourseBOImpl();
+            case Student_Course:
+                return  new Student_CourseBOImpl();
+            case Login:
+                return  new LoginBOImpl();
             default:
                 return null;
 

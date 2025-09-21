@@ -23,6 +23,7 @@ public class FactoryConfiguration {
 
         configuration.setProperties(property);
         configuration.addAnnotatedClass(User.class);
+        configuration.addAnnotatedClass(Student.class);
 
 
         sessionFactory = configuration.buildSessionFactory();
