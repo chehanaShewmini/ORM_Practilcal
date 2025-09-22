@@ -22,7 +22,7 @@
 //
 //public class CourseManagePageController implements Initializable {
 //
-////    private final CourseBO courseBO = (CourseBO) BOFactory.getInstance().getBO(BOTypes.COURSE);
+//    private final CourseBO courseBO = (CourseBO) BOFactory.getInstance().getBO(BOTypes.COURSE);
 //
 //    @FXML
 //    private AnchorPane ancCoursePage;
