@@ -1,4 +1,12 @@
 package lk.ijse.DAO.custom;
 
-public interface CourseDAO {
+import lk.ijse.DAO.CrudDAO;
+import lk.ijse.Entity.Course;
+import org.hibernate.Session;
+
+import java.sql.SQLException;
+import java.util.Optional;
+
+public interface CourseDAO extends CrudDAO<Course> {
+    public boolean saveNewCourse(Course course)throws SQLException;
 }

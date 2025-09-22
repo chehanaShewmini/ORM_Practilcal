@@ -1,38 +1,31 @@
 package lk.ijse.BO;
 
-import lk.ijse.BO.Impl.*;
+import lk.ijse.BO.custom.Impl.*;
 
 public class BOFactory {
     private static BOFactory boFactory;
-    private BOFactory() {
-
+    private BOFactory() {}
+    public static BOFactory getInstance(){
+        return boFactory == null ? (boFactory = new BOFactory()) : boFactory;
     }
 
-    public static BOFactory getBoFactory() {
-        return (boFactory == null) ? boFactory = new BOFactory() : boFactory;
-    }
-    public enum BoType{
-        User, Student, Payment, Course, Student_Course,Login
-
-    }
-    public SuperBO getBo(BoType boType){
+    public SuperBO getBo(BOTypes boType){
         switch (boType){
-
-            case User:
-                return new UserBOImpl();
-            case Student:
+            case COURSE:
+                return new CourseBOImpl();
+            case INSTRUCTOR:
+                return new InstructorBOImpl();
+            case LESSONS:
+                return new LessonBOImpl();
+            case PAYMENT:
+                return new PaymentBOImpl();
+            case STUDENT:
                 return new StudentBOImpl();
-            case Payment:
-                return  new PaymentBOImpl();
-            case Course:
-                return  new CourseBOImpl();
-            case Student_Course:
-                return  new Student_CourseBOImpl();
-            case Login:
-                return  new LoginBOImpl();
+            case USER:
+                return new UserBOImpl();
+
             default:
                 return null;
-
         }
     }
 }

@@ -1,32 +1,29 @@
 package lk.ijse.DAO;
 
-import lk.ijse.DAO.impl.StudentDAOImpl;
-import lk.ijse.DAO.impl.UserDAOImpl;
+import lk.ijse.DAO.custom.impl.*;
+
+import static lk.ijse.BO.BOTypes.COURSE;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
 
     private DAOFactory() {
+
     }
 
-    public static DAOFactory getDaoFactory() {
-        return (daoFactory == null) ? daoFactory = new DAOFactory() : daoFactory;
+    public static DAOFactory getInstance() {
+        return daoFactory == null ? (daoFactory = new DAOFactory()) : daoFactory;
     }
 
-    public enum DaoType {
-        User, Student, Payment, Course, Student_Course,Login
+    public <T extends  SuperDAO> T getDAO(DAOTypes daoType) {
+        return switch (daoType){
+            case COURSE ->  (T) new CourseDAOImpl();
+            case INSTRUCTOR ->  (T) new InstructorDAOImpl();
+            case LESSONS ->  (T) new LessonDAOImpl();
+            case PAYMENT -> (T) new PaymentDAOImpl();
+            case STUDENT -> (T) new StudentDAOImpl();
+//            case STUDENTCOURSEDETAIL ->  (T) new StudentCourseDetailDAOImpl();
+            case USER ->  (T) new UserDAOImpl();
+        };
     }
-
-    public SuperDAO getDAO(DaoType daoType) {
-        switch (daoType) {
-            case User:
-                return new UserDAOImpl();
-                case Student:
-                    return new StudentDAOImpl();
-
-            default:
-                return null;
-        }
-    }
-
 }
