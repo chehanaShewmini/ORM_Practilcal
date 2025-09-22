@@ -1,6 +1,109 @@
 package lk.ijse.BO.custom.Impl;
 
 import lk.ijse.BO.custom.StudentBO;
+import lk.ijse.BO.exceptionHandling.DuplicateException;
+import lk.ijse.BO.exceptionHandling.NotFoundException;
+import lk.ijse.BO.utils.EntityDTOConverter;
+import lk.ijse.DAO.DAOFactory;
+import lk.ijse.DAO.DAOTypes;
+import lk.ijse.DAO.custom.StudentDAO;
+import lk.ijse.DTO.StudentDTO;
+import lk.ijse.Entity.Student;
+import org.hibernate.Session;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class StudentBOImpl implements StudentBO {
+    private final StudentDAO studentDAO =(StudentDAO) DAOFactory.getInstance().getDAO(DAOTypes.STUDENT);
+    private final EntityDTOConverter converter = new EntityDTOConverter();
+
+    @Override
+    public String getNextId() throws SQLException {
+        return studentDAO.getNextId();
+    }
+
+    @Override
+    public List<StudentDTO> getAll() throws SQLException {
+        List<Student> students = studentDAO.getAll();
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+        for (Student student : students) {
+            studentDTOS.add(converter.getStudentDTO(student));
+        }
+        return studentDTOS;
+    }
+
+    @Override
+    public String getLastId() throws SQLException {
+        return studentDAO.getLastId();
+    }
+
+    @Override
+    public boolean save(StudentDTO studentDTO) throws SQLException {
+        Optional<Student> student = studentDAO.findById(studentDTO.getStudentId());
+        if (student.isPresent()) {
+            throw new DuplicateException("Student already exists");
+        }
+        return studentDAO.save(converter.getStudent(studentDTO));
+    }
+
+    @Override
+    public boolean update(StudentDTO studentDTO) throws SQLException {
+        Optional<Student> student = studentDAO.findById(studentDTO.getStudentId());
+        if (student.isEmpty()){
+            throw new NotFoundException("Student not found");
+        }
+        return studentDAO.update(converter.getStudent(studentDTO));
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
+        Optional<Student> student = studentDAO.findById(id);
+        if (student.isEmpty()){
+            throw new NotFoundException("Student not found");
+        }
+        return studentDAO.delete(id);
+    }
+
+    @Override
+    public List<String> getAllIds() throws SQLException {
+        return studentDAO.getAllIds();
+    }
+
+    @Override
+    public Optional<StudentDTO> findById(String id) throws SQLException {
+        Optional<Student> student = studentDAO.findById(id);
+        if (student.isPresent()){
+            return Optional.of(converter.getStudentDTO(student.get()));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public List<StudentDTO> search(String search) throws SQLException {
+        ArrayList<Student> students = (ArrayList<Student>) studentDAO.search(search);
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+        for (Student student : students) {
+            studentDTOS.add(converter.getStudentDTO(student));
+        }
+        return studentDTOS;
+    }
+
+    @Override
+    public String getStudentIdByContact(String phone) throws SQLException {
+        return studentDAO.getStudentIdByContact(phone);
+    }
+
+    @Override
+    public String getStudentFirstNameById(String studentId) throws SQLException {
+        return studentDAO.getStudentFirstNameById(studentId);
+    }
+
+    @Override
+    public String getStudentLastNameById(String studentId) throws SQLException {
+        return studentDAO.getStudentLastNameById(studentId);
+    }
+
 }

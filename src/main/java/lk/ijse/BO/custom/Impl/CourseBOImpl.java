@@ -1,6 +1,104 @@
 package lk.ijse.BO.custom.Impl;
 
 import lk.ijse.BO.custom.CourseBO;
+import lk.ijse.BO.exceptionHandling.DuplicateException;
+import lk.ijse.BO.exceptionHandling.NotFoundException;
+import lk.ijse.BO.utils.EntityDTOConverter;
+import lk.ijse.DAO.DAOFactory;
+import lk.ijse.DAO.DAOTypes;
+import lk.ijse.DAO.custom.CourseDAO;
+import lk.ijse.DTO.CourseDTO;
+import lk.ijse.Entity.Course;
+import org.hibernate.Session;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class CourseBOImpl implements CourseBO {
+    private final CourseDAO courseDAO =(CourseDAO) DAOFactory.getInstance().getDAO(DAOTypes.COURSE);
+    private final EntityDTOConverter converter = new EntityDTOConverter();
+
+    @Override
+    public String getNextId() throws SQLException {
+        return courseDAO.getNextId();
+    }
+
+    @Override
+    public List<CourseDTO> getAll() throws SQLException {
+        List<Course> courses = courseDAO.getAll();
+        List<CourseDTO> courseDTOs = new ArrayList<>();
+        for (Course course : courses) {
+            courseDTOs.add(converter.getCourseDTO(course));
+        }
+        return courseDTOs;
+    }
+
+    @Override
+    public String getLastId() throws SQLException {
+        return courseDAO.getLastId();
+    }
+
+    @Override
+    public boolean save(CourseDTO courseDTO) throws SQLException {
+        Optional<Course> course = courseDAO.findById(courseDTO.getCourseId());
+        if (course.isPresent()) {
+            throw new DuplicateException("course already exist");
+        }
+
+        return courseDAO.save(converter.getCourse(courseDTO));
+    }
+
+    @Override
+    public boolean update(CourseDTO courseDTO) throws SQLException {
+        Optional<Course> course = courseDAO.findById(courseDTO.getCourseId());
+        if (course.isEmpty()){
+            throw new NotFoundException("Course not found");
+        }
+        return courseDAO.update(converter.getCourse(courseDTO));
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
+        Optional<Course> course = courseDAO.findById(id);
+        if (course.isEmpty()){
+            throw new NotFoundException("Course not found");
+        }
+        return courseDAO.delete(id);
+    }
+
+    @Override
+    public List<String> getAllIds() throws SQLException {
+        return courseDAO.getAllIds();
+    }
+
+    @Override
+    public Optional<CourseDTO> findById(String id) throws SQLException {
+        Optional<Course> course = courseDAO.findById(id);
+        if (course.isPresent()){
+            return Optional.of(converter.getCourseDTO(course.get()));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public List<CourseDTO> search(String search) throws SQLException {
+        ArrayList<Course> courses = (ArrayList<Course>) courseDAO.search(search);
+        List<CourseDTO> courseDTOs = new ArrayList<>();
+        for (Course course : courses) {
+            courseDTOs.add(converter.getCourseDTO(course));
+        }
+        return courseDTOs;
+    }
+
+    @Override
+    public boolean saveNewCourse(CourseDTO courseDTO) throws SQLException {
+        Optional<Course> course = courseDAO.findById(courseDTO.getCourseId());
+        if (course.isPresent()) {
+            throw new DuplicateException("course already exist");
+        }
+
+        return courseDAO.save(converter.getCourse(courseDTO));
+    }
 }
