@@ -1,14 +1,15 @@
-package lk.ijse.DTO;
+package lk.ijse.tdm;
 
 import lombok.*;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 
-public class UserDTO {
+public class UserTM {
     private String userId;
     private String userName;
     private String password;

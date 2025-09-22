@@ -32,10 +32,10 @@ public class PaymentPageController {
     private ComboBox<?> cmbMethod;
 
     @FXML
-    private ComboBox<?> cmbStudentId;
+    private ComboBox<?> cmbStatus;
 
     @FXML
-    private ComboBox<?> cmbType;
+    private ComboBox<?> cmbStudentId;
 
     @FXML
     private TableColumn<?, ?> colAmount;
@@ -50,10 +50,10 @@ public class PaymentPageController {
     private TableColumn<?, ?> colPaymentId;
 
     @FXML
-    private TableColumn<?, ?> colStudentId;
+    private TableColumn<?, ?> colStatus;
 
     @FXML
-    private TableColumn<?, ?> colType;
+    private TableColumn<?, ?> colStudentId;
 
     @FXML
     private DatePicker dpPaymentDate;

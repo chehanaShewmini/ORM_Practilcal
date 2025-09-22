@@ -1,16 +1,19 @@
-package lk.ijse.DTO;
+package lk.ijse.tdm;
 
+import lk.ijse.DTO.CourseDTO;
+import lk.ijse.DTO.LessonsDTO;
 import lombok.*;
 
 import java.util.ArrayList;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 
-public class InstructorDTO {
+public class InstructorTM {
     private String instructorId;
     private String firstName;
     private String lastName;
@@ -18,8 +21,4 @@ public class InstructorDTO {
     private String phone;
     private String specialization;
     private String availability_schedule;
-    @Builder.Default
-    private ArrayList<LessonsDTO> lessons = new ArrayList<>();
-    @Builder.Default
-    private ArrayList<CourseDTO> courses = new ArrayList<>();
 }

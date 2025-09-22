@@ -29,7 +29,16 @@ public class UserManagePageController {
     private ComboBox<?> cmbRole;
 
     @FXML
+    private ComboBox<?> cmbStatus;
+
+    @FXML
+    private TableColumn<?, ?> colEmail;
+
+    @FXML
     private TableColumn<?, ?> colRole;
+
+    @FXML
+    private TableColumn<?, ?> colStatus;
 
     @FXML
     private TableColumn<?, ?> colUserId;
@@ -41,7 +50,7 @@ public class UserManagePageController {
     private TableView<?> tblUsers;
 
     @FXML
-    private PasswordField txtConfirmPassword;
+    private TextField txtEmail;
 
     @FXML
     private PasswordField txtPassword;

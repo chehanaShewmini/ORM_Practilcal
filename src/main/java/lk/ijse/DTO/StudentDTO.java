@@ -1,20 +1,28 @@
 package lk.ijse.DTO;
 
-
 import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 @Getter
 @Setter
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class StudentDTO {
-    private int id;
+    private String studentId;
     private String firstName;
     private String lastName;
-    private int age;
-    private int contactNo;
     private String email;
+    private String phone;
     private String address;
+    private LocalDate dob;
+    private LocalDate registrationDate;
+    //    @Builder.Default
+//    private ArrayList<StudentCourseDetailDTO> studentCourseDetail = new ArrayList<>();
+    @Builder.Default
+    private ArrayList<LessonsDTO> lessons = new ArrayList<>();
+    @Builder.Default
+    private ArrayList<PaymentDTO> payments = new ArrayList<>();
 }
-

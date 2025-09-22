@@ -32,6 +32,12 @@ public class LessonManagePageController {
     private ComboBox<?> cmbInstructorId;
 
     @FXML
+    private ComboBox<?> cmbStatus;
+
+    @FXML
+    private ComboBox<?> cmbStudentId;
+
+    @FXML
     private TableColumn<?, ?> colCourseId;
 
     @FXML
@@ -48,6 +54,12 @@ public class LessonManagePageController {
 
     @FXML
     private TableColumn<?, ?> colStartTime;
+
+    @FXML
+    private TableColumn<?, ?> colStatus;
+
+    @FXML
+    private TableColumn<?, ?> colStudentId;
 
     @FXML
     private DatePicker dpLessonDate;

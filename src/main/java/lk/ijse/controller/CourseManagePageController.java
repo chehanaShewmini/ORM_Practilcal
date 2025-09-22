@@ -2,6 +2,7 @@ package lk.ijse.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -25,6 +26,9 @@ public class CourseManagePageController {
     private Button btnUpdate;
 
     @FXML
+    private ComboBox<?> cmbInstructorId;
+
+    @FXML
     private TableColumn<?, ?> colCourseId;
 
     @FXML
@@ -38,6 +42,9 @@ public class CourseManagePageController {
 
     @FXML
     private TableColumn<?, ?> colFee;
+
+    @FXML
+    private TableColumn<?, ?> colInstructorId;
 
     @FXML
     private TableView<?> tblCourses;

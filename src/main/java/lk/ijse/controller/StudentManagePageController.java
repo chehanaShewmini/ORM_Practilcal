@@ -1,14 +1,20 @@
 package lk.ijse.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import lk.ijse.BO.BOFactory;
-import lk.ijse.BO.custom.StudentBO;
 
 public class StudentManagePageController {
+
+    @FXML
+    private Button btnAdd;
+
+    @FXML
+    private Button btnBack;
 
     @FXML
     private Button btnClear;
@@ -17,49 +23,57 @@ public class StudentManagePageController {
     private Button btnDelete;
 
     @FXML
-    private Button btnSave;
-
-    @FXML
     private Button btnUpdate;
 
     @FXML
-    private Label lblAddress;
+    private TableColumn<?, ?> colAddress;
 
     @FXML
-    private Label lblEmail;
+    private TableColumn<?, ?> colDob;
 
     @FXML
-    private Label lblName;
+    private TableColumn<?, ?> colEmail;
 
     @FXML
-    private TextField txtAdress;
+    private TableColumn<?, ?> colFirstName;
 
     @FXML
-    private TextField txtMail;
+    private TableColumn<?, ?> colLastName;
 
     @FXML
-    private TextField txtName;
-
-    StudentBO studentBO=(StudentBO) BOFactory.getBoFactory().getBO(BOFactory.BoType.Student);
+    private TableColumn<?, ?> colPhone;
 
     @FXML
-    void btnClearAction(ActionEvent event) {
-
-    }
+    private TableColumn<?, ?> colRegDate;
 
     @FXML
-    void btnDeleteAction(ActionEvent event) {
-
-    }
+    private TableColumn<?, ?> colStudentId;
 
     @FXML
-    void btnSaveAction(ActionEvent event) {
-
-    }
+    private DatePicker dpDob;
 
     @FXML
-    void btnUpdateAction(ActionEvent event) {
+    private DatePicker dpRegDate;
 
-    }
+    @FXML
+    private TableView<?> tblStudents;
+
+    @FXML
+    private TextArea txtAddress;
+
+    @FXML
+    private TextField txtEmail;
+
+    @FXML
+    private TextField txtFirstName;
+
+    @FXML
+    private TextField txtLastName;
+
+    @FXML
+    private TextField txtPhone;
+
+    @FXML
+    private TextField txtStudentId;
 
 }
