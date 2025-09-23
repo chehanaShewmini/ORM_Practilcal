@@ -1,5 +1,6 @@
 package lk.ijse.DTO;
 
+import lk.ijse.DTO.LessonsDTO;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ public class CourseDTO {
     private double fee;
     private String description;
     private String instructorId;
-    //    @Builder.Default
-//    private ArrayList<StudentCourseDetailDTO> student_course_detail = new ArrayList<>();
+    private int enrollmentCount;
+
     @Builder.Default
     private ArrayList<LessonsDTO> lessons = new ArrayList<>();
 }

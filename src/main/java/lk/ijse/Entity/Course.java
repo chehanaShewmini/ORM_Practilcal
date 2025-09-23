@@ -1,6 +1,7 @@
 package lk.ijse.Entity;
 
 import jakarta.persistence.*;
+import lk.ijse.Entity.Student;
 import lombok.*;
 
 import java.util.List;
@@ -33,8 +34,8 @@ public class Course {
     private String description;
 
 
-    @ManyToOne
-    @JoinColumn(name = "instructorId" , referencedColumnName = "instructorId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instructorId" , referencedColumnName = "instructorId" , nullable = true)
     private Instructor instructor;
 //    private String instructorId;
 
@@ -49,11 +50,19 @@ public class Course {
 
     @OneToMany(
             mappedBy = "course",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
     )
 
     private List<Lessons> lessons;
 
+    @Transient
+    private int enrollmentCount;
+
 //    public Object getInstructorId() {
 //    }
+
+    public String getInstructorId() {
+        return instructor != null ? instructor.getInstructorId() : null;
+    }
 }
