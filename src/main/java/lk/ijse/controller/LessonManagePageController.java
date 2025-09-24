@@ -1,79 +1,268 @@
 package lk.ijse.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.BOTypes;
+import lk.ijse.BO.custom.LessonBO;
+import lk.ijse.DTO.LessonsDTO;
+import lk.ijse.tdm.LessonsTM;
 
-public class LessonManagePageController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-    @FXML
-    private Button btnAddLesson;
+public class LessonManagePageController implements Initializable {
 
-    @FXML
-    private Button btnBack;
+    private final LessonBO lessonBO = (LessonBO) BOFactory.getInstance().getBo(BOTypes.LESSONS);
 
-    @FXML
-    private Button btnClearLesson;
+    public AnchorPane ancLessonsPage;
+    public Label lblLessonId;
+    public TextField txtLessonDate;
+    public TextField txtStartTime;
+    public TextField txtEndTime;
+    public ComboBox cmbStatus;
+    public TextField txtStudentId;
+    public TextField txtCourseId;
+    public TextField txtInstructorId;
 
-    @FXML
-    private Button btnDeleteLesson;
+    public Button btnSave;
+    public Button btnUpdate;
+    public Button btnDelete;
+    public Button btnReset;
+    public TextField txtSearch;
 
-    @FXML
-    private Button btnUpdateLesson;
+    public TableView<LessonsTM> tblLessons;
+    public TableColumn<LessonsTM , String> colLessonId;
+    public TableColumn<LessonsTM , String> colLessonDate;
+    public TableColumn<LessonsTM , String> colStartTime;
+    public TableColumn<LessonsTM , String> colEndTime;
+    public TableColumn<LessonsTM , String> colStatus;
+    public TableColumn<LessonsTM , String> colStudentId;
+    public TableColumn<LessonsTM , String> colCourseId;
+    public TableColumn<LessonsTM , String> colInstructorId;
 
-    @FXML
-    private ComboBox<?> cmbCourseId;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setCellValueFactories();
+        try {
+            loadAllLessons();
+            loadNextId();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR,"Initialization error : "+e.getMessage());
+        }
+    }
 
-    @FXML
-    private ComboBox<?> cmbInstructorId;
+    private void setCellValueFactories() {
+        colLessonId.setCellValueFactory(new PropertyValueFactory<>("lessonId"));
+        colLessonDate.setCellValueFactory(new PropertyValueFactory<>("lessonDate"));
+        colStartTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        colEndTime.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colStudentId.setCellValueFactory(new PropertyValueFactory<>("studentId"));
+        colCourseId.setCellValueFactory(new PropertyValueFactory<>("courseId"));
+        colInstructorId.setCellValueFactory(new PropertyValueFactory<>("instructorId"));
 
-    @FXML
-    private ComboBox<?> cmbStatus;
+        try {
+            cmbStatus.setItems(FXCollections.observableArrayList("Scheduled" , "In Progress" , "Cancelled" , "Missed" , "Pending" , "Theory Completed" , "Practical Completed" , "Ready For Test"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load status : " + e.getMessage());
+        }
+    }
 
-    @FXML
-    private ComboBox<?> cmbStudentId;
+    private void loadAllLessons() throws Exception {
+        tblLessons.setItems(FXCollections.observableArrayList(
+                lessonBO.getAll().stream().map(lessonsDTO -> new LessonsTM(
+                        lessonsDTO.getLessonId(),
+                        lessonsDTO.getLessonDate(),
+                        lessonsDTO.getStartTime(),
+                        lessonsDTO.getEndTime(),
+                        lessonsDTO.getStatus(),
+                        lessonsDTO.getStudentId(),
+                        lessonsDTO.getCourseId(),
+                        lessonsDTO.getInstructorId()
+                )).toList()
+        ));
+    }
 
-    @FXML
-    private TableColumn<?, ?> colCourseId;
+    private void loadNextId() throws Exception {
+        String nextId = lessonBO.getNextId();
+        lblLessonId.setText(nextId);
+    }
 
-    @FXML
-    private TableColumn<?, ?> colDate;
+    public void btnSaveOnAction(ActionEvent actionEvent) {
+        try {
+            boolean isSaved = lessonBO.save(LessonsDTO.builder()
+                    .lessonId(lblLessonId.getText())
+                    .lessonDate(txtLessonDate.getText())
+                    .startTime(txtStartTime.getText())
+                    .endTime(txtEndTime.getText())
+                    .status(cmbStatus.getValue().toString())
+                    .studentId(txtStudentId.getText())
+                    .courseId(txtCourseId.getText())
+                    .instructorId(txtInstructorId.getText())
+                    .build());
 
-    @FXML
-    private TableColumn<?, ?> colEndTime;
+            if (isSaved) {
+                showAlert(Alert.AlertType.INFORMATION," Lesson Saved Successfully!");
+                loadAllLessons();
+                resetForm();
+                loadNextId();
+            }else {
+                showAlert(Alert.AlertType.ERROR,"Error Saving Lesson!");
+            }
 
-    @FXML
-    private TableColumn<?, ?> colInstructorId;
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR,"Error saving lesson : "+e.getMessage());
+        }
+    }
 
-    @FXML
-    private TableColumn<?, ?> colLessonId;
+    public void btnUpdateOnAction(ActionEvent actionEvent) {
+        try {
+            boolean isUpdated = lessonBO.update(LessonsDTO.builder()
+                    .lessonId(lblLessonId.getText())
+                    .lessonDate(txtLessonDate.getText())
+                    .startTime(txtStartTime.getText())
+                    .endTime(txtEndTime.getText())
+                    .status(cmbStatus.getValue().toString())
+                    .studentId(txtStudentId.getText())
+                    .courseId(txtCourseId.getText())
+                    .instructorId(txtInstructorId.getText())
+                    .build());
+            if (isUpdated) {
+                showAlert(Alert.AlertType.INFORMATION," Lesson Updated Successfully!");
+                loadAllLessons();
+                resetForm();
+                loadNextId();
+            }else {
+                showAlert(Alert.AlertType.ERROR,"Error Updating Lesson!");
+            }
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR,"Error updating lesson : "+e.getMessage());
+        }
+    }
 
-    @FXML
-    private TableColumn<?, ?> colStartTime;
+    public void btnDeleteOnAction(ActionEvent actionEvent) {
+        String id = lblLessonId.getText();
+        if (id.isEmpty()){
+            showAlert(Alert.AlertType.WARNING,"Please select a lesson to delete!");
+            return;
+        }
 
-    @FXML
-    private TableColumn<?, ?> colStatus;
+        try {
+            boolean isDeleted = lessonBO.delete(id);
+            if (isDeleted) {
+                showAlert(Alert.AlertType.INFORMATION,"Lesson Deleted Successfully!");
+                loadAllLessons();
+                resetForm();
+                loadNextId();
 
-    @FXML
-    private TableColumn<?, ?> colStudentId;
+            }else {
+                showAlert(Alert.AlertType.ERROR,"Error Deleting Lesson!");
+            }
 
-    @FXML
-    private DatePicker dpLessonDate;
+        }catch (Exception e){
+            showAlert(Alert.AlertType.ERROR,"Error deleting lesson : "+e.getMessage());
+        }
+    }
 
-    @FXML
-    private TableView<?> tblLessons;
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetForm();
+        try {
+            loadNextId();
+        }catch (Exception e){
+            showAlert(Alert.AlertType.ERROR,"Error generating ID : "+e.getMessage());
+        }
+    }
 
-    @FXML
-    private TextField txtEndTime;
+    public void OnClickedTable(MouseEvent mouseEvent) {
+        LessonsTM selectedItem = tblLessons.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            lblLessonId.setText(selectedItem.getLessonId());
+            txtLessonDate.setText(selectedItem.getLessonDate());
+            txtStartTime.setText(selectedItem.getStartTime());
+            txtEndTime.setText(selectedItem.getEndTime());
+            cmbStatus.setValue(selectedItem.getStatus());
+            txtStudentId.setText(selectedItem.getStudentId());
+            txtCourseId.setText(selectedItem.getCourseId());
+            txtInstructorId.setText(selectedItem.getInstructorId());
+        }
+    }
 
-    @FXML
-    private TextField txtLessonId;
+    public void goToDashboard(MouseEvent mouseEvent) throws IOException {
+        navigateTo("/view/DashBoard.fxml");
+    }
 
-    @FXML
-    private TextField txtStartTime;
+    private void resetForm() {
+        txtLessonDate.clear();
+        txtStartTime.clear();
+        txtEndTime.clear();
+        cmbStatus.getSelectionModel().clearSelection();
+        txtStudentId.clear();
+        txtCourseId.clear();
+        txtInstructorId.clear();
+        tblLessons.getSelectionModel().clearSelection();
 
+    }
+
+    private void showAlert(Alert.AlertType type, String message) {
+        new Alert(type, message).show();
+    }
+
+    private void navigateTo(String path) {
+        try {
+            ancLessonsPage.getChildren().clear();
+
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+
+            anchorPane.prefWidthProperty().bind(ancLessonsPage.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancLessonsPage.heightProperty());
+
+            ancLessonsPage.getChildren().add(anchorPane);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
+            e.printStackTrace();
+        }
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String search = txtSearch.getText();
+        if (search.isEmpty()) {
+            try {
+                loadAllLessons();
+            }catch (Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR,"Failed to search : "+e.getMessage());
+            }
+        }else {
+            try {
+                ArrayList<LessonsDTO> lessons = (ArrayList<LessonsDTO>) lessonBO.search(search);
+                tblLessons.setItems(FXCollections.observableArrayList(
+                        lessons.stream()
+                                .map(lessonsDTO -> new LessonsTM(
+                                        lessonsDTO.getLessonId(),
+                                        lessonsDTO.getLessonDate(),
+                                        lessonsDTO.getStartTime(),
+                                        lessonsDTO.getEndTime(),
+                                        lessonsDTO.getStatus(),
+                                        lessonsDTO.getStudentId(),
+                                        lessonsDTO.getCourseId(),
+                                        lessonsDTO.getInstructorId()
+                                )).toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR,"Failed to search : "+e.getMessage());
+            }
+        }
+    }
 }

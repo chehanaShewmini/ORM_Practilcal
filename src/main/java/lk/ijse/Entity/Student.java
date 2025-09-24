@@ -1,9 +1,6 @@
 package lk.ijse.Entity;
 
 import jakarta.persistence.*;
-import lk.ijse.Entity.Course;
-import lk.ijse.Entity.Lessons;
-import lk.ijse.Entity.Payment;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -20,6 +17,7 @@ import java.util.List;
 
 public class Student {
     @Id
+
     @Column
     private String studentId;
 
@@ -50,7 +48,7 @@ public class Student {
 //    )
 //    private List<StudentCourseDetail> studentCourseDetails;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "student_course_detail",
             joinColumns = @JoinColumn(name = "studentId"),
@@ -61,7 +59,8 @@ public class Student {
 
     @OneToMany(
             mappedBy = "student",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
     )
     private List<Lessons> lessons;
 

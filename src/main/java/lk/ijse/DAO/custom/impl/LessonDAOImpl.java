@@ -13,6 +13,7 @@ import java.util.Optional;
 
 public class LessonDAOImpl implements LessonDAO {
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
+
     @Override
     public String getNextId() throws SQLException {
         Session session = factoryConfiguration.getSession();
@@ -34,10 +35,9 @@ public class LessonDAOImpl implements LessonDAO {
     public List<Lessons> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
         try {
-            Query<Lessons> query = session.createQuery("from Lessons ",Lessons.class);
-            List<Lessons> lessonsList = query.list();
-            return lessonsList;
-        }finally {
+            Query<Lessons> query = session.createQuery("from Lessons", Lessons.class);
+            return query.list();
+        } finally {
             session.close();
         }
     }
@@ -54,8 +54,8 @@ public class LessonDAOImpl implements LessonDAO {
             if (idList.isEmpty()) {
                 return null;
             }
-            return idList.get(1);
-        }finally {
+            return idList.get(0); // ✅ FIXED (instead of getFirst())
+        } finally {
             session.close();
         }
     }
@@ -68,10 +68,12 @@ public class LessonDAOImpl implements LessonDAO {
             session.persist(lessons);
             transaction.commit();
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             transaction.rollback();
             e.printStackTrace();
             return false;
+        } finally {
+            session.close();
         }
     }
 
@@ -79,15 +81,16 @@ public class LessonDAOImpl implements LessonDAO {
     public boolean update(Lessons lessons) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
-
         try {
             session.merge(lessons);
             transaction.commit();
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             transaction.rollback();
             e.printStackTrace();
             return false;
+        } finally {
+            session.close();
         }
     }
 
@@ -103,11 +106,11 @@ public class LessonDAOImpl implements LessonDAO {
                 return true;
             }
             return false;
-        }catch (Exception e) {
+        } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
             return false;
-        }finally {
+        } finally {
             session.close();
         }
     }
@@ -115,11 +118,10 @@ public class LessonDAOImpl implements LessonDAO {
     @Override
     public Optional<Lessons> findById(String id) throws SQLException {
         Session session = factoryConfiguration.getSession();
-
         try {
             Lessons lessons = session.get(Lessons.class, id);
             return Optional.ofNullable(lessons);
-        }finally {
+        } finally {
             session.close();
         }
     }
@@ -127,20 +129,17 @@ public class LessonDAOImpl implements LessonDAO {
     @Override
     public List<Lessons> search(String search) throws SQLException {
         String searchText = "%" + search + "%";
-
-
-        try(Session session = factoryConfiguration.getSession()) {
+        try (Session session = factoryConfiguration.getSession()) {
             Query<Lessons> query = session.createQuery(
-                    "FROM Lessons l" +
-                            " WHERE l.lessonId LIKE  :search OR" +
-                            " l.lessonDate LIKE  :search OR " +
-                            "l.startTime LIKE  :search OR" +
-                            " l.endTime LIKE  :search OR " +
-                            "l.status LIKE  :search  " ,
+                    "FROM Lessons l " +
+                            "WHERE l.lessonId LIKE :search OR " +
+                            "l.lessonDate LIKE :search OR " +
+                            "l.startTime LIKE :search OR " +
+                            "l.endTime LIKE :search OR " +
+                            "l.status LIKE :search",
                     Lessons.class
             );
-            query.setParameter("search" , searchText);
-
+            query.setParameter("search", searchText);
             return query.list();
         }
     }

@@ -2,6 +2,7 @@ package lk.ijse.DAO.custom.impl;
 
 import lk.ijse.config.FactoryConfiguration;
 import lk.ijse.DAO.custom.CourseDAO;
+import lk.ijse.DTO.CourseDTO;
 import lk.ijse.Entity.Course;
 import lk.ijse.Entity.Student;
 import org.hibernate.Hibernate;
@@ -10,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +35,6 @@ public class CourseDAOImpl implements CourseDAO {
         }
     }
 
-    // Get all courses (lazy-safe for enrollmentCount)
     @Override
     public List<Course> getAll() {
         try (Session session = factoryConfiguration.getSession()) {
@@ -177,4 +178,45 @@ public class CourseDAOImpl implements CourseDAO {
             throw e;
         }
     }
+
+    public Course get(String id) throws Exception {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Course course = session.get(Course.class, id);
+        session.close();
+        return course;
+    }
+
+    @Override
+    public CourseDTO getCourseByName(String courseName) throws Exception {
+        // Open Hibernate session
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            session.beginTransaction();
+
+            // HQL query to fetch Course entity by courseName
+            String hql = "FROM Course c WHERE c.courseName = :name";
+            Course courseEntity = session.createQuery(hql, Course.class)
+                    .setParameter("name", courseName)
+                    .uniqueResult();
+
+            session.getTransaction().commit();
+
+            if (courseEntity != null) {
+                // Convert Course entity to CourseDTO
+                return CourseDTO.builder()
+                        .courseId(courseEntity.getCourseId())
+                        .courseName(courseEntity.getCourseName())
+                        .duration(courseEntity.getDuration())
+                        .fee(courseEntity.getFee())
+                        .description(courseEntity.getDescription())
+                        .instructorId(courseEntity.getInstructorId())
+                        .enrollmentCount(courseEntity.getEnrollmentCount())
+                        .lessons(new ArrayList<>()) // You can map lessons if needed
+                        .build();
+            }
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get course by name: " + e.getMessage(), e);
+        }
+    }
+
 }

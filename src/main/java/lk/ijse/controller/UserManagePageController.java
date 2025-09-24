@@ -1,64 +1,381 @@
 package lk.ijse.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.BOTypes;
+import lk.ijse.BO.custom.UserBO;
+import lk.ijse.controller.util.PasswordUtil;
+import lk.ijse.DTO.UserDTO;
+import lk.ijse.tdm.UserTM;
+//import org.hibernate.cfg.AbstractPropertyHolder;
+import org.mindrot.jbcrypt.BCrypt;
 
-public class UserManagePageController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
-    @FXML
-    private Button btnAdd;
+public class UserManagePageController implements Initializable {
 
-    @FXML
-    private Button btnBack;
+    private final UserBO userBO = (UserBO) BOFactory.getInstance().getBo(BOTypes.USER);
 
-    @FXML
-    private Button btnClear;
+    public AnchorPane ancUserPage;
+    public Label lblUserId;
+    public TextField txtUserName;
+    public TextField txtPassword;
+    public TextField txtConfirmPassword;
+    public ComboBox cmbRole;
+    public TextField txtEmail;
+    public ComboBox cmbStatus;
+    public Button btnSave;
+    public Button btnUpdate;
+    public Button btnDelete;
+    public Button btnReset;
+    public TextField txtSearch;
+    public TableView<UserTM> tblUsers;
+    public TableColumn<UserTM , String> colUserId;
+    public TableColumn<UserTM , String> colUserName;
+    public TableColumn<UserTM , String> colPassword;
+    public TableColumn<UserTM , String> colRole;
+    public TableColumn<UserTM , String> colEmail;
+    public TableColumn<UserTM , String> colStatus;
 
-    @FXML
-    private Button btnDelete;
+    private final String passwordRegex = "^.{8,}$";
+    private final String usernameRegex = "^[A-Za-z_-]+$";
 
-    @FXML
-    private Button btnUpdate;
 
-    @FXML
-    private ComboBox<?> cmbRole;
 
-    @FXML
-    private ComboBox<?> cmbStatus;
 
-    @FXML
-    private TableColumn<?, ?> colEmail;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setCellValueFactories();
+        try {
+            loadAllUsers();
+            loadNextId();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR,"Initialization error" + e.getMessage());
+        }
 
-    @FXML
-    private TableColumn<?, ?> colRole;
+    }
 
-    @FXML
-    private TableColumn<?, ?> colStatus;
+    private void setCellValueFactories() {
+        colUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        colUserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-    @FXML
-    private TableColumn<?, ?> colUserId;
+        try {
+            cmbRole.setItems(FXCollections.observableArrayList("Admin" , "Receptionist" ));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load role" + e.getMessage());
+        }
 
-    @FXML
-    private TableColumn<?, ?> colUsername;
+        try {
+            cmbStatus.setItems(FXCollections.observableArrayList("Active", "Inactive" , "Suspended" , "Pending Approval"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Failed to load status" + e.getMessage());
+        }
 
-    @FXML
-    private TableView<?> tblUsers;
+    }
 
-    @FXML
-    private TextField txtEmail;
+    public void loadAllUsers() throws Exception {
+        tblUsers.setItems(FXCollections.observableArrayList(
+                userBO.getAll().stream().map(userDTO -> new UserTM(
+                        userDTO.getUserId(),
+                        userDTO.getUserName(),
+                        userDTO.getPassword(),
+                        userDTO.getRole(),
+                        userDTO.getEmail(),
+                        userDTO.getStatus()
+                )).toList()
+        ));
+    }
 
-    @FXML
-    private PasswordField txtPassword;
+    private void loadNextId() throws Exception {
+        String nextId = userBO.getNextId();
+        lblUserId.setText(nextId);
+    }
+    public void btnSaveOnAction(ActionEvent actionEvent) {
+        try {
+            if (!validateInput()) return;
 
-    @FXML
-    private TextField txtUserId;
+            String userId = lblUserId.getText();
+            String username = txtUserName.getText();
+            String password = txtPassword.getText();
+            String confirmPassword = txtConfirmPassword.getText();
+            String email = txtEmail.getText();
 
-    @FXML
-    private TextField txtUsername;
+            // Check ComboBoxes
+            if (cmbRole.getValue() == null || cmbStatus.getValue() == null) {
+                showAlert(Alert.AlertType.ERROR, "Role or Status must be selected!");
+                return;
+            }
+            String role = cmbRole.getValue().toString();
+            String status = cmbStatus.getValue().toString();
 
+            // Username validation
+            if (!username.matches(usernameRegex)) {
+                showAlert(Alert.AlertType.ERROR, "Username is invalid!");
+                return;
+            }
+
+            // Password validation
+            if (!password.matches(passwordRegex)) {
+                showAlert(Alert.AlertType.ERROR,"Password must be at least 8 characters!");
+                return;
+            }
+
+            // Confirm password check
+            if (!password.equals(confirmPassword)) {
+                showAlert(Alert.AlertType.ERROR, "Passwords do not match!");
+                return;
+            }
+
+            // Hash the password
+            String encryptedPassword = PasswordUtil.hashPassword(password);
+
+            // Save user
+            boolean isSaved = userBO.save(new UserDTO(
+                    userId,
+                    username,
+                    encryptedPassword,
+                    role,
+                    email,
+                    status
+            ));
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "User saved successfully!").show();
+
+                // Clear input fields
+                txtUserName.clear();
+                txtPassword.clear();
+                txtConfirmPassword.clear();
+                txtEmail.clear();
+                cmbRole.getSelectionModel().clearSelection();
+                cmbStatus.getSelectionModel().clearSelection();
+
+                // Refresh the TableView
+                loadAllUsers();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR,"Failed to save user").show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Error: " + e.getMessage());
+        }
+    }
+
+
+    public void btnUpdateOnAction(ActionEvent actionEvent) {
+        try {
+            if (!validateInput()) return;
+
+            String userId = lblUserId.getText(); // ID of the user to update
+            String username = txtUserName.getText();
+            String password = txtPassword.getText();
+            String confirmPassword = txtConfirmPassword.getText();
+            String email = txtEmail.getText();
+
+            // Check ComboBoxes
+            if (cmbRole.getValue() == null || cmbStatus.getValue() == null) {
+                showAlert(Alert.AlertType.ERROR, "Role or Status must be selected!");
+                return;
+            }
+            String role = cmbRole.getValue().toString();
+            String status = cmbStatus.getValue().toString();
+
+            // Username validation
+            if (!username.matches(usernameRegex)) {
+                showAlert(Alert.AlertType.ERROR, "Username is invalid!");
+                return;
+            }
+
+            // Password validation
+            if (!password.matches(passwordRegex)) {
+                showAlert(Alert.AlertType.ERROR,"Password must be at least 8 characters!");
+                return;
+            }
+
+            // Confirm password check
+            if (!password.equals(confirmPassword)) {
+                showAlert(Alert.AlertType.ERROR, "Passwords do not match!");
+                return;
+            }
+
+            // Hash the password
+            String encryptedPassword = PasswordUtil.hashPassword(password);
+
+            // Update user
+            boolean isUpdated = userBO.update(new UserDTO(
+                    userId,
+                    username,
+                    encryptedPassword,
+                    role,
+                    email,
+                    status
+            ));
+
+            if (isUpdated) {
+                new Alert(Alert.AlertType.INFORMATION, "User updated successfully!").show();
+
+                // Clear input fields
+                txtUserName.clear();
+                txtPassword.clear();
+                txtConfirmPassword.clear();
+                txtEmail.clear();
+                cmbRole.getSelectionModel().clearSelection();
+                cmbStatus.getSelectionModel().clearSelection();
+
+                // Refresh the TableView
+                loadAllUsers();
+
+            } else {
+                new Alert(Alert.AlertType.ERROR,"Failed to update user").show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Error: " + e.getMessage());
+        }
+    }
+
+
+    public void btnDeleteOnAction(ActionEvent actionEvent) {
+        String id  = lblUserId.getText();
+        if (id.isEmpty()){
+            showAlert(Alert.AlertType.ERROR,"Please select an user to delete");
+            return;
+        }
+
+        try {
+            boolean isDeleted = userBO.delete(id);
+            if (isDeleted) {
+                showAlert(Alert.AlertType.INFORMATION, "User deleted successfully!");
+                loadAllUsers();
+                resetForm();
+                loadNextId();
+            }else {
+                showAlert(Alert.AlertType.ERROR,"Failed to delete user!");
+            }
+
+        }catch (Exception e){
+            showAlert(Alert.AlertType.ERROR,"Error deleting user:" + e.getMessage());
+        }
+
+    }
+
+    public void btnResetOnAction(ActionEvent actionEvent) {
+        resetForm();
+        try{
+            loadNextId();
+        }catch (Exception e){
+            showAlert(Alert.AlertType.ERROR,"Error generating ID:" + e.getMessage());
+        }
+    }
+
+    public void OnClickedTable(MouseEvent mouseEvent) {
+        UserTM selectedItem = tblUsers.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            lblUserId.setText(selectedItem.getUserId());
+            txtUserName.setText(selectedItem.getUserName());
+            txtPassword.setText(selectedItem.getPassword());
+            cmbRole.setValue(selectedItem.getRole());
+            txtEmail.setText(selectedItem.getEmail());
+            cmbStatus.setValue(selectedItem.getStatus());
+        }
+    }
+
+    public void goToDashboard(MouseEvent mouseEvent) {
+        navigateTo("/view/DashBoard.fxml");
+    }
+
+    private void resetForm() {
+        txtUserName.clear();
+        txtPassword.clear();
+        cmbRole.getSelectionModel().clearSelection();
+        txtEmail.clear();
+        cmbStatus.getSelectionModel().clearSelection();
+        tblUsers.getSelectionModel().clearSelection();
+    }
+
+    private boolean validateInput() {
+        if (txtUserName.getText().isEmpty() || txtPassword.getText().isEmpty()|| cmbStatus.getSelectionModel().isEmpty() || txtEmail.getText().isEmpty() || cmbStatus.getSelectionModel().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR , "please input all fields");
+        }
+
+        if (!Pattern.matches("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$", txtEmail.getText())) {
+            showAlert(Alert.AlertType.ERROR, "Invalid email format!");
+            return false;
+        }
+        return true;
+    }
+
+    private void showAlert(Alert.AlertType alertType , String message) {
+        new Alert(alertType , message).show();
+    }
+
+    private void navigateTo(String path) {
+        try {
+            ancUserPage.getChildren().clear();
+
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+
+            anchorPane.prefWidthProperty().bind(ancUserPage.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancUserPage.heightProperty());
+
+            ancUserPage.getChildren().add(anchorPane);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
+            e.printStackTrace();
+        }
+    }
+
+    public void search(KeyEvent keyEvent) {
+        String search = txtSearch.getText();
+        if (search.isEmpty()) {
+            try {
+                loadAllUsers();
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search!" + e.getMessage());
+            }
+        }else {
+            try {
+                ArrayList<UserDTO> userList = (ArrayList<UserDTO>) userBO.search(search);
+                tblUsers.setItems(FXCollections.observableArrayList(
+                        userList.stream()
+                                .map(userDTO -> new UserTM(
+                                        userDTO.getUserId(),
+                                        userDTO.getUserName(),
+                                        userDTO.getPassword(),
+                                        userDTO.getRole(),
+                                        userDTO.getEmail(),
+                                        userDTO.getStatus()
+                                )).toList()
+                ));
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to search!" + e.getMessage());
+            }
+        }
+    }
 }

@@ -1,31 +1,43 @@
 package lk.ijse.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
 
 public class LoginPageController {
 
-    @FXML
-    private Button btnLogin;
+    public AnchorPane ancLoginPage;
 
-    @FXML
-    private CheckBox chkShowPassword;
+    public void goToMainPage(MouseEvent mouseEvent) throws IOException {
+        navigateTo("/view/MainPage.fxml");
+    }
 
-    @FXML
-    private ComboBox<?> cmbRole;
+    public void btnGoSignUpPage(ActionEvent actionEvent) {
+        navigateTo("/view/SignUpPage.fxml");
 
-    @FXML
-    private Hyperlink lnkChangePassword;
+    }
 
-    @FXML
-    private PasswordField txtPassword;
+    public void btnGoSigninPage(ActionEvent actionEvent) {
+        navigateTo("/view/Signin.fxml");
+    }
 
-    @FXML
-    private TextField txtUsername;
+    private void navigateTo(String path) {
+        try {
+            ancLoginPage.getChildren().clear();
 
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+
+            anchorPane.prefWidthProperty().bind(ancLoginPage.widthProperty());
+            anchorPane.prefHeightProperty().bind(ancLoginPage.heightProperty());
+
+            ancLoginPage.getChildren().add(anchorPane);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Page not found..!").show();
+            e.printStackTrace();
+        }
+    }
 }

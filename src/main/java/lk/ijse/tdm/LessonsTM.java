@@ -2,11 +2,6 @@ package lk.ijse.tdm;
 
 import lombok.*;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 @Getter
 @Setter
 @ToString
@@ -14,7 +9,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Builder
 
-public class LessonTM {
+public class LessonsTM {
     private String  lessonId;
     private String lessonDate;
     private String startTime;

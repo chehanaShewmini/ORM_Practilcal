@@ -1,6 +1,7 @@
 package lk.ijse.BO.custom;
 
 import lk.ijse.BO.SuperBO;
+import lk.ijse.DTO.CourseDTO;
 import lk.ijse.DTO.InstructorDTO;
 import lk.ijse.Entity.Instructor;
 import org.hibernate.Session;
@@ -22,5 +23,8 @@ public interface InstructorBO extends SuperBO {
     public List<String> getAllIds()  throws SQLException;
     public Optional<InstructorDTO> findById(String id)  throws SQLException;
     public List<InstructorDTO> search(String search)  throws SQLException;
+    public boolean assignCourse(String instructorId, String courseId) throws Exception;
+    public List<CourseDTO>  getCoursesByInstructor(String instructorId)  throws SQLException;
+    public int getEnrollmentCount(String courseId) throws Exception;
 
 }

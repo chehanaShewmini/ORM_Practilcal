@@ -1,7 +1,6 @@
 package lk.ijse.Entity;
 
 import jakarta.persistence.*;
-import lk.ijse.Entity.Student;
 import lombok.*;
 
 import java.util.Date;
@@ -13,10 +12,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
+@ToString
 @Table(name = "payment")
 public class Payment {
     @Id
-    @Column
     private String paymentId;
 
     @ManyToOne
