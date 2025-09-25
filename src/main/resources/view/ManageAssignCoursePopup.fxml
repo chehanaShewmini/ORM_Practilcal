@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.ManageAssignCoursePopup">
-    <VBox layoutX="12.0" layoutY="14.0" prefHeight="376.0" prefWidth="580.0" spacing="10" style="-fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="468.0" prefWidth="723.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.ManageAssignCoursePopup">
+    <VBox layoutX="12.0" layoutY="14.0" prefHeight="423.0" prefWidth="701.0" spacing="10" style="-fx-border-color: #000000; -fx-border-radius: 30; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
         <children>
             <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Assign Courses to Instructor">
                 <VBox.margin>
@@ -40,14 +40,14 @@
                 </VBox.margin>
             </HBox>
 
-            <TableView fx:id="tblCourses" prefHeight="250" prefWidth="550">
+            <TableView fx:id="tblCourses" prefHeight="317.0" prefWidth="628.0">
                 <columns>
-                    <TableColumn fx:id="colCourseId" prefWidth="60.79998779296875" text="courseId" />
-                    <TableColumn fx:id="colCourseName" prefWidth="93.59997940063477" text="courseName" />
-                    <TableColumn fx:id="colDuration" prefWidth="86.4000244140625" text="duration" />
-                    <TableColumn fx:id="colFee" prefWidth="72.80003356933594" text="fee" />
-                    <TableColumn fx:id="colDescription" prefWidth="152.79998779296875" text="description" />
-                    <TableColumn fx:id="colEnrollmentCount" prefWidth="109.60003662109375" text="enrollmentCount" />
+                    <TableColumn fx:id="colCourseId" prefWidth="75.0" text="courseId" />
+                    <TableColumn fx:id="colCourseName" prefWidth="112.0" text="courseName" />
+                    <TableColumn fx:id="colDuration" prefWidth="108.0" text="duration" />
+                    <TableColumn fx:id="colFee" prefWidth="89.0" text="fee" />
+                    <TableColumn fx:id="colDescription" prefWidth="166.0" text="description" />
+                    <TableColumn fx:id="colEnrollmentCount" prefWidth="128.0" text="enrollmentCount" />
                 </columns>
                 <VBox.margin>
                     <Insets left="10.0" right="10.0" />

@@ -17,9 +17,9 @@
     <children>
         <HBox layoutX="0.8" layoutY="8.0" prefHeight="791.0" prefWidth="1552.0" style="-fx-border-color: #2f3542; -fx-border-radius: 20; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="8.0">
             <children>
-                <VBox prefHeight="738.0" prefWidth="451.0" style="-fx-border-radius: 50; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css">
+                <VBox prefHeight="769.0" prefWidth="355.0" style="-fx-border-radius: 50; -fx-background-radius: 20;" styleClass="root" stylesheets="@../styles/background.css">
                     <HBox.margin>
-                        <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="40.0" right="10.0" top="10.0" />
                     </HBox.margin>
                     <effect>
                         <DropShadow />
@@ -39,12 +39,12 @@
                         </HBox>
                         <HBox layoutX="10.0" layoutY="10.0" prefHeight="93.0" prefWidth="451.0">
                             <children>
-                                <Label prefHeight="58.0" prefWidth="266.0" text=" 🚗  OVERVIEW  🚗">
+                                <Label prefHeight="58.0" prefWidth="294.0" text=" 🚗  OVERVIEW  🚗">
                                     <HBox.margin>
-                                        <Insets left="100.0" top="10.0" />
+                                        <Insets left="30.0" top="10.0" />
                                     </HBox.margin>
                                     <font>
-                                        <Font name="Times New Roman" size="31.0" />
+                                        <Font name="System Italic" size="31.0" />
                                     </font>
                                     <effect>
                                         <DropShadow />
@@ -55,34 +55,34 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </HBox>
-                        <Button fx:id="btnCourse" mnemonicParsing="false" onAction="#btnGoCourseOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="COURSE">
+                        <Button fx:id="btnCourse" mnemonicParsing="false" onAction="#btnGoCourseOnAction" prefHeight="61.0" prefWidth="200.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="COURSE">
                             <VBox.margin>
-                                <Insets left="150.0" />
+                                <Insets left="100.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnInstructor" mnemonicParsing="false" onAction="#btnGoInstructorOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="INSTRUCTOR">
+                        <Button fx:id="btnInstructor" mnemonicParsing="false" onAction="#btnGoInstructorOnAction" prefHeight="61.0" prefWidth="200.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="INSTRUCTOR">
                             <VBox.margin>
-                                <Insets left="150.0" top="30.0" />
+                                <Insets left="100.0" top="30.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnLessons" mnemonicParsing="false" onAction="#btnGoLessonsOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="LESSONS">
+                        <Button fx:id="btnLessons" mnemonicParsing="false" onAction="#btnGoLessonsOnAction" prefHeight="61.0" prefWidth="200.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="LESSONS">
                             <VBox.margin>
-                                <Insets left="150.0" top="30.0" />
+                                <Insets left="100.0" top="30.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnPayment" mnemonicParsing="false" onAction="#btnGoPaymentOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="PAYMENT">
+                        <Button fx:id="btnPayment" mnemonicParsing="false" onAction="#btnGoPaymentOnAction" prefHeight="61.0" prefWidth="200.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="PAYMENT">
                             <VBox.margin>
-                                <Insets left="150.0" top="30.0" />
+                                <Insets left="100.0" top="30.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnStudent" mnemonicParsing="false" onAction="#btnGoStudentOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="STUDENT">
+                        <Button fx:id="btnStudent" mnemonicParsing="false" onAction="#btnGoStudentOnAction" prefHeight="61.0" prefWidth="199.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="STUDENT">
                             <VBox.margin>
-                                <Insets left="150.0" top="30.0" />
+                                <Insets left="100.0" top="30.0" />
                             </VBox.margin>
                         </Button>
-                        <Button fx:id="btnUser" mnemonicParsing="false" onAction="#btnGoUserOnAction" prefHeight="61.0" prefWidth="175.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="USER">
+                        <Button fx:id="btnUser" mnemonicParsing="false" onAction="#btnGoUserOnAction" prefHeight="61.0" prefWidth="199.0" styleClass="cur-button" stylesheets="@../styles/DashBoardButtons.css" text="USER">
                             <VBox.margin>
-                                <Insets left="150.0" top="30.0" />
+                                <Insets left="100.0" top="30.0" />
                             </VBox.margin>
                         </Button>
                     </children>
@@ -105,7 +105,7 @@
                                         <Insets left="150.0" top="50.0" />
                                     </HBox.margin>
                                     <font>
-                                        <Font name="Times New Roman" size="40.0" />
+                                        <Font name="DejaVu Sans Mono Bold" size="40.0" />
                                     </font>
                                     <effect>
                                         <DisplacementMap>
@@ -119,10 +119,10 @@
                         </HBox>
                         <ImageView fitHeight="492.0" fitWidth="809.0" pickOnBounds="true" preserveRatio="true">
                             <VBox.margin>
-                                <Insets left="70.0" />
+                                <Insets left="200.0" />
                             </VBox.margin>
                             <image>
-                                <Image url="@../images/elite_management-removebg-preview.png" />
+                                <Image url="@../Images/ANI_Dash.png" />
                             </image>
                         </ImageView>
                         <ImageView fitHeight="113.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true">
@@ -130,7 +130,7 @@
                                 <Insets left="800.0" />
                             </VBox.margin>
                             <image>
-                                <Image url="@../images/Driving_School_Logo_Design_Car_Silhouette-removebg-preview.png" />
+                                <Image url="@../Images/ANI_Dash.png" />
                             </image>
                         </ImageView>
                     </children>

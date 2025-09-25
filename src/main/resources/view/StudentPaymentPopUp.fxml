@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="350.0" prefWidth="420.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.ManageStudentPaymentPopup">
+<AnchorPane prefHeight="376.0" prefWidth="447.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.ManageStudentPaymentPopup">
 
     <children>
-        <VBox alignment="CENTER" layoutX="20" layoutY="40" spacing="15" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #000000;">
+        <VBox alignment="CENTER" layoutX="20" layoutY="40" prefHeight="294.0" prefWidth="396.0" spacing="15" style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: #000000;">
             <children>
 
                 <!-- Title -->

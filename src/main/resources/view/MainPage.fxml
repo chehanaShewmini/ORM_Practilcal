@@ -14,46 +14,18 @@
 
 <AnchorPane fx:id="ancMainPage" prefHeight="754.0" prefWidth="1539.0" style="-fx-border-radius: 50; -fx-border-color: #000000; -fx-background-radius: 50;" styleClass="root" stylesheets="@../styles/background.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.MainPageController">
     <children>
-        <VBox layoutX="101.6" layoutY="47.199999999999996" prefHeight="661.0" prefWidth="1474.0" style="-fx-background-radius: 50; -fx-border-color: #000000; -fx-border-radius: 50;" styleClass="root" stylesheets="@../styles/background.css" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="46.0">
+        <VBox layoutX="102.0" layoutY="32.0" prefHeight="658.0" prefWidth="1473.0" style="-fx-background-radius: 50; -fx-border-color: #000000; -fx-border-radius: 50;" styleClass="root" stylesheets="@../styles/background.css" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="121.0" AnchorPane.topAnchor="30.0">
             <children>
-                <ImageView fitHeight="120.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
-                    <VBox.margin>
-                        <Insets left="20.0" top="10.0" />
-                    </VBox.margin>
-                    <image>
-                        <Image url="@../images/Driving_School_Logo_Design_Car_Silhouette-removebg-preview.png" />
-                    </image>
-                </ImageView>
-                <HBox prefHeight="14.0" prefWidth="881.0">
-                    <children>
-                        <Label prefHeight="58.0" prefWidth="169.0" text=" ELITE " textFill="WHITE">
-                            <font>
-                                <Font name="Times New Roman" size="50.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="325.0" />
-                            </HBox.margin>
-                            <effect>
-                                <DropShadow />
-                            </effect>
-                        </Label>
-                    </children>
-                </HBox>
-                <HBox layoutX="10.0" layoutY="150.0" prefHeight="14.0" prefWidth="881.0">
-                    <children>
-                        <Label prefHeight="58.0" prefWidth="474.0" text="DRIVING   SCHOOL " textFill="#fff6f6">
-                            <font>
-                                <Font name="Times New Roman" size="50.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="200.0" />
-                            </HBox.margin>
-                            <effect>
-                                <DropShadow />
-                            </effect>
-                        </Label>
-                    </children>
-                </HBox>
+                  <Label prefHeight="61.0" prefWidth="1169.0" text="                  ELITE DRIVING   SCHOOL  " textFill="WHITE">
+                      <font>
+                          <Font name="Times New Roman" size="50.0" />
+                      </font>
+                      <effect>
+                          <DropShadow />
+                      </effect>
+                  </Label>
+                <HBox prefHeight="14.0" prefWidth="881.0" />
+                <HBox layoutX="10.0" layoutY="150.0" prefHeight="14.0" prefWidth="881.0" />
                 <HBox prefHeight="27.0" prefWidth="881.0">
                     <children>
                         <Label text="Learn to drive." textFill="#050000">
@@ -83,10 +55,10 @@
                 </HBox>
                 <ImageView fx:id="bigImage" fitHeight="406.0" fitWidth="386.0" pickOnBounds="true" preserveRatio="true">
                     <VBox.margin>
-                        <Insets bottom="-300.0" left="800.0" top="-200.0" />
+                        <Insets bottom="-300.0" left="700.0" top="100.0" />
                     </VBox.margin>
                     <image>
-                        <Image url="@../images/The%20Future%20of%20Car%20Ownership_%20Fractional%20Sharing.jpeg" />
+                        <Image url="@../Images/Dving_02.jpeg" />
                     </image>
                 </ImageView>
                 <VBox prefHeight="234.0" prefWidth="534.0">
@@ -94,29 +66,32 @@
                         <Insets left="100.0" right="1000.0" top="40.0" />
                     </VBox.margin>
                     <children>
-                        <ImageView fx:id="smallImage" fitHeight="316.0" fitWidth="369.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="smallImage" fitHeight="270.0" fitWidth="351.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../images/Nadat_je_geslaagd_bent_mag_je_tot_je_18de_de_weg_op_samen_met_je_coach_es__-removebg-preview.png" />
+                                <Image url="@../Images/Dving_01.jpeg" />
                             </image>
                         </ImageView>
                     </children>
                 </VBox>
-                <HBox prefHeight="129.0" prefWidth="1332.0">
+                <HBox prefHeight="0.0" prefWidth="1469.0">
                     <children>
-                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#btnGoLoginPageOnAction" style="-fx-border-radius: 50; -fx-background-radius: 50;" stylesheets="@../styles/mainFirst.css" text="&gt;&gt; START NOW ...!">
+                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#btnGoLoginPageOnAction" prefHeight="187.0" prefWidth="399.0" style="-fx-border-radius: 50; -fx-background-radius: 50;" stylesheets="@../styles/mainFirst.css" text="&gt;&gt; START NOW ...!">
                             <font>
                                 <Font size="36.0" />
                             </font>
                             <HBox.margin>
-                                <Insets bottom="10.0" left="400.0" top="30.0" />
+                                <Insets bottom="10.0" left="400.0" top="20.0" />
                             </HBox.margin>
                             <effect>
                                 <DropShadow radius="32.81" width="112.24" />
                             </effect>
+                     <VBox.margin>
+                        <Insets bottom="-300.0" left="800.0" top="-200.0" />
+                     </VBox.margin>
                         </Button>
                     </children>
                     <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets />
                     </VBox.margin>
                 </HBox>
             </children>

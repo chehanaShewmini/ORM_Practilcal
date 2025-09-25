@@ -248,12 +248,12 @@
                     <children>
                         <BorderPane prefHeight="62.0" prefWidth="970.0">
                             <center>
-                                <Label prefHeight="58.0" prefWidth="304.0" text="Manage Courses" BorderPane.alignment="CENTER">
+                                <Label prefHeight="49.0" prefWidth="381.0" text="Manage Courses" BorderPane.alignment="CENTER">
                                     <font>
                                         <Font size="40.0" />
                                     </font>
                                     <BorderPane.margin>
-                                        <Insets left="300.0" top="30.0" />
+                                        <Insets left="200.0" top="30.0" />
                                     </BorderPane.margin>
                                     <effect>
                                         <DropShadow />
